@@ -1,0 +1,90 @@
+.card {
+    text-align: center;
+    max-width: 250px;
+    border: 1px solid hsl(0, 0%, 80%);
+    padding: 30px 10px;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px hsla(0, 0%, 0%, 0.1);
+    margin: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    display: inline-block;
+}
+
+.profilePic {
+    max-width: 150px;
+    height: auto;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    border: 2px solid hsl(0, 8%, 5%);
+    transition: transform 1s;
+}
+.title {
+    font-family: Arial, Helvetica, sans-serif;
+    color: hsl(0, 0%, 15%);
+}
+
+.button {
+    background: hsl(240deg 84.13% 5.21%);
+    color: #ffffff;
+    max-width: 100%;
+    padding: 5px 30px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+/* Hover State */
+.card:hover {
+    background: hsl(240deg 84.13% 5.21%);
+    color: #ffffff;
+}
+
+.card:hover .profilePic  {
+    border: 2px solid hsl(0deg 7.75% 89.92%);
+    border-radius: 50%;
+    /* animation: spin 1s linear; */
+    /* animation: flip 1s forwards; */
+    animation: wiggle 1s ease-in-out infinite;
+}
+
+.card:hover .title  {
+    color: hsl(0, 0%, 100%);
+}
+
+.card:hover .button  {
+    background: hsl(0, 0%, 100%);
+    color: hsl(0, 0%, 15%);
+}
+
+@keyframes flip {
+    0% {
+      transform: rotateY(0deg); /* Initial state, not flipped */
+    }
+    50% {
+      transform: rotateY(180deg); /* Halfway through the animation, flipped */
+    }
+    100% {
+      transform: rotateY(0deg); /* End state, back to the original */
+    }
+  }
+
+  @keyframes wiggle {
+    0% {
+      transform: rotateZ(-10deg); /* Rotate left */
+    }
+    50% {
+      transform: rotateZ(10deg); /* Rotate right */
+    }
+    100% {
+      transform: rotateZ(-10deg); /* Rotate left again */
+    }
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotateZ(0deg); /* Start with no rotation */
+    }
+    100% {
+      transform: rotateZ(360deg); /* End with one full rotation (360 degrees) */
+    }
+  }
