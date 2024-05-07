@@ -1,19 +1,19 @@
 .container {
-    display: flex;/* or inline-flex */
-    align-items: center;
-  }
+  display: flex; /* or inline-flex */
+  align-items: center;
+  flex-flow: wrap;
+}
 
-  .divElment {
-    color: black;
-    /* width: 33%; */
-    border: 1px solid gray;
-    text-align: center;
-    padding: 20px;
-    margin: 5px;
-    height: 40px;
-  }
+.divElment {
+  color: black;
+  width: 250px;
+  border: 1px solid gray;
+  text-align: center;
+  padding: 20px;
+  margin: 5px;
+  height: 40px;
+}
 
-  .divElmentOdd {
-    background: red;
-    height: 100px;
-  }
+.divElmentOdd {
+  background: red;
+}
