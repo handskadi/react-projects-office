@@ -206,3 +206,24 @@ header div button:hover {
   font-weight: bold;
   color: white;
 }
+.best-seller {
+  background-color: rgb(124 155 118);
+  border-radius: 0 10px 10px 0;
+  position: absolute;
+  padding: 2px 20px;
+  top: -150px;
+  color: white;
+  left: 0px;
+  font-size: 12px;
+}
+
+.costal {
+  background-color: rgb(112 112 112);
+  border-radius: 10px 0 0 10px;
+  position: absolute;
+  padding: 2px 20px;
+  top: -150px;
+  color: white;
+  right: 0px;
+  font-size: 12px;
+}
