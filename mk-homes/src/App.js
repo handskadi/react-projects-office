@@ -27,6 +27,7 @@ export default function App() {
       <Header />
       <Aside />
       <Main />
+      <AddNewApartment />
       <Footer />
     </>
   );
@@ -87,14 +88,6 @@ function Main() {
   );
 }
 
-function Footer() {
-  return (
-    <footer>
-      <div>2024 - @Copyright - Mkweb</div>
-    </footer>
-  );
-}
-
 function NavBar() {
   return (
     <nav>
@@ -143,7 +136,7 @@ function Card({ apartment }) {
         <div className="stars">
           <Rating star={apartment.star} /> {apartment.star}/5
         </div>
-        <button>Learn More</button>
+        <button>Book Now</button>
 
         <span className="price">{apartment.price}$</span>
         {apartment.royal && (
@@ -237,4 +230,89 @@ function Rating({ star }) {
   }
 
   return stars;
+}
+
+function Footer() {
+  return (
+    <footer>
+      <div>2024 - @Copyright - Mkweb</div>
+    </footer>
+  );
+}
+
+function AddNewApartment() {
+  function handleAddApartmentSubmit(e) {
+    e.preventDefault();
+    alert("It's Added!");
+  }
+  return (
+    <form className="add-appart-form" onSubmit={handleAddApartmentSubmit}>
+      <fieldset>
+        <legend>Property Name</legend>
+        <input type="text" />
+      </fieldset>
+
+      <fieldset>
+        <legend>Property Description</legend>
+        <input type="text" />
+      </fieldset>
+
+      <fieldset>
+        <legend>Property Image</legend>
+        <input type="text" />
+      </fieldset>
+
+      <fieldset>
+        <legend>Property Price</legend>
+        <input type="text" />
+      </fieldset>
+
+      <div>
+        <fieldset>
+          <legend>Feature</legend>
+          <ul>
+            <li>
+              <input type="checkbox" />
+              <label>Royal bed</label>
+            </li>
+            <li>
+              <input type="checkbox" />
+              <label>Queen Bed</label>
+            </li>
+            <li>
+              <input type="checkbox" />
+              <label>King Bed</label>
+            </li>
+            <li>
+              <input type="checkbox" />
+              <label>Twin Bed</label>
+            </li>
+            <li>
+              <input type="checkbox" />
+              <label>Double Bed</label>
+            </li>
+            <li>
+              <input type="checkbox" />
+              <label>Free Wifi</label>
+            </li>
+            <li>
+              <input type="checkbox" />
+              <label>Air-conditioner</label>
+            </li>
+            <li>
+              <input type="checkbox" />
+              <label>Swimming pool</label>
+            </li>
+            <li>
+              <input type="checkbox" />
+              <label>Tv</label>
+            </li>
+          </ul>
+        </fieldset>
+      </div>
+      <br />
+      <button>Add Apartment</button>
+      <button>x</button>
+    </form>
+  );
 }

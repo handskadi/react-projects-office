@@ -19,10 +19,10 @@ const data = [
     features: ["Twin Beds", "Air-conditioner", "Free Wifi"],
     description:
       "Doloracere neque asperiores quisquam illum distinctio doloremque quae dolorum, possimus totam!",
-    star: 3,
+    star: 4,
     price: 67,
     bestSeller: false,
-    royal: true,
+    royal: false,
     costal: false,
   },
   {
@@ -32,7 +32,7 @@ const data = [
     features: ["Twin Beds", "Air-conditioner", "Free Wifi"],
     description:
       "Doloracere neque asperiores quisquam illum distinctio doloremque quae dolorum, possimus totam!",
-    star: 3,
+    star: 1,
     price: 82,
     bestSeller: true,
     royal: true,
@@ -45,7 +45,7 @@ const data = [
     features: ["Twin Beds", "Air-conditioner", "Free Wifi"],
     description:
       "Doloracere neque asperiores quisquam illum distinctio doloremque quae dolorum, possimus totam!",
-    star: 3,
+    star: 5,
     price: 98,
     bestSeller: true,
     royal: false,
