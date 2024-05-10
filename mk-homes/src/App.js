@@ -5,16 +5,23 @@ import {
   faBell,
   faCheck,
   faChessQueen,
+  faPersonSwimming,
   faShoppingCart,
   faStar,
+  faStarHalfStroke,
 } from "@fortawesome/free-solid-svg-icons";
+
+import {
+  faHandshake,
+  faStar as starFrame,
+} from "@fortawesome/free-regular-svg-icons";
 
 import { data } from "./data.js";
 import logo from "./images/logo.png";
 
 const apartmentsData = data;
 
-function App() {
+export default function App() {
   return (
     <>
       <Header />
@@ -132,27 +139,102 @@ function Card({ apartment }) {
             </li>
           ))}
         </ul>
-        <p>
-          Doloracere neque asperiores quisquam illum distinctio doloremque quae
-          dolorum, possimus totam!
-        </p>
+        <p>{apartment.description}</p>
         <div className="stars">
-          <FontAwesomeIcon icon={faStar} />
-          <FontAwesomeIcon icon={faStar} />
-          <FontAwesomeIcon icon={faStar} />
-          <i className="fa-regular fa-star"></i>
-          <i className="fa-regular fa-star"></i>
+          <Rating star={apartment.star} /> {apartment.star}/5
         </div>
         <button>Learn More</button>
-        <span className="price">79$</span>
-        <span className="queen">
-          <FontAwesomeIcon icon={faChessQueen} />
-        </span>
-        <span className="best-seller">
-          <i className="fa-regular fa-handshake"></i> Best Seller
-        </span>
+
+        <span className="price">{apartment.price}$</span>
+        {apartment.royal && (
+          <span className="queen">
+            <FontAwesomeIcon icon={faChessQueen} />
+          </span>
+        )}
+        {apartment.bestSeller && (
+          <span className="best-seller">
+            <FontAwesomeIcon icon={faHandshake} /> Best Seller
+          </span>
+        )}
+        {apartment.costal && (
+          <span class="costal">
+            <FontAwesomeIcon icon={faPersonSwimming} /> Costal
+          </span>
+        )}
       </div>
     </div>
   );
 }
-export default App;
+
+function Rating({ star }) {
+  let stars;
+  switch (Number(star)) {
+    case 1:
+      stars = (
+        <>
+          <FontAwesomeIcon icon={faStar} />
+          <FontAwesomeIcon icon={starFrame} />
+          <FontAwesomeIcon icon={starFrame} />
+          <FontAwesomeIcon icon={starFrame} />
+          <FontAwesomeIcon icon={starFrame} />
+        </>
+      );
+      break;
+    case 2:
+      stars = (
+        <>
+          <FontAwesomeIcon icon={faStar} />
+          <FontAwesomeIcon icon={faStar} />
+          <FontAwesomeIcon icon={starFrame} />
+          <FontAwesomeIcon icon={starFrame} />
+          <FontAwesomeIcon icon={starFrame} />
+        </>
+      );
+      break;
+    case 3:
+      stars = (
+        <>
+          <FontAwesomeIcon icon={faStar} />
+          <FontAwesomeIcon icon={faStar} />
+          <FontAwesomeIcon icon={faStar} />
+          <FontAwesomeIcon icon={starFrame} />
+          <FontAwesomeIcon icon={starFrame} />
+        </>
+      );
+      break;
+    case 4:
+      stars = (
+        <>
+          <FontAwesomeIcon icon={faStar} />
+          <FontAwesomeIcon icon={faStar} />
+          <FontAwesomeIcon icon={faStar} />
+          <FontAwesomeIcon icon={faStar} />
+          <FontAwesomeIcon icon={starFrame} />
+        </>
+      );
+      break;
+    case 5:
+      stars = (
+        <>
+          <FontAwesomeIcon icon={faStar} />
+          <FontAwesomeIcon icon={faStar} />
+          <FontAwesomeIcon icon={faStar} />
+          <FontAwesomeIcon icon={faStar} />
+          <FontAwesomeIcon icon={faStar} />
+        </>
+      );
+      break;
+    default:
+      stars = (
+        <>
+          <FontAwesomeIcon icon={faStarHalfStroke} />
+          <FontAwesomeIcon icon={starFrame} />
+          <FontAwesomeIcon icon={starFrame} />
+          <FontAwesomeIcon icon={starFrame} />
+          <FontAwesomeIcon icon={starFrame} />
+        </>
+      );
+  }
+
+  return stars;
+}
