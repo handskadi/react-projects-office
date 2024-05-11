@@ -6,9 +6,11 @@ import {
   faCheck,
   faChessQueen,
   faPersonSwimming,
+  faPlus,
   faShoppingCart,
   faStar,
   faStarHalfStroke,
+  faCircleXmark,
 } from "@fortawesome/free-solid-svg-icons";
 
 import {
@@ -22,18 +24,32 @@ import logo from "./images/logo.png";
 const apartmentsData = data;
 
 export default function App() {
+  const [hide, setHide] = useState(false);
+  const [apartments, setApartments] = useState(apartmentsData);
+
+  function handleCloseButton() {
+    setHide((h) => !h);
+  }
+
+  function handleAddNewAppart(apartment) {
+    setApartments((apartments) => [...apartments, apartment]);
+  }
   return (
     <>
-      <Header />
+      <Header hide={hide} onClosePopUp={handleCloseButton} />
       <Aside />
-      <Main />
-      <AddNewApartment />
+      <Main apartments={apartments} />
+      <AddNewApartment
+        hide={hide}
+        onClosePopUp={handleCloseButton}
+        onAddNewApartment={handleAddNewAppart}
+      />
       <Footer />
     </>
   );
 }
 
-function Header() {
+function Header({ onClosePopUp }) {
   const [active, setActive] = useState(true);
   return (
     <header>
@@ -51,7 +67,10 @@ function Header() {
           </span>
           <FontAwesomeIcon icon={faShoppingCart} />
         </button>
-        <button onClick={() => setActive(!active)}>Login</button>
+        <button onClick={onClosePopUp}>
+          Add <FontAwesomeIcon icon={faPlus} />
+        </button>
+        <button onClick={() => setActive(!active)}>Logout</button>
       </div>
     </header>
   );
@@ -71,7 +90,7 @@ function Aside() {
   );
 }
 
-function Main() {
+function Main({ apartments }) {
   return (
     <main>
       <article>
@@ -83,7 +102,7 @@ function Main() {
           magnam.
         </p>
       </article>
-      <Cards />
+      <Cards apartments={apartments} />
     </main>
   );
 }
@@ -109,11 +128,11 @@ function NavBar() {
   );
 }
 
-function Cards() {
+function Cards({ apartments }) {
   return (
     <article className="cards">
-      {apartmentsData.map((apartment) => (
-        <Card apartment={apartment} />
+      {apartments.map((apartment) => (
+        <Card apartment={apartment} key={apartment.id} />
       ))}
     </article>
   );
@@ -127,7 +146,7 @@ function Card({ apartment }) {
         <h3>{apartment.title}</h3>
         <ul>
           {apartment.features.map((feature) => (
-            <li>
+            <li key={feature}>
               <FontAwesomeIcon icon={faCheck} /> {feature}
             </li>
           ))}
@@ -150,7 +169,7 @@ function Card({ apartment }) {
           </span>
         )}
         {apartment.costal && (
-          <span class="costal">
+          <span className="costal">
             <FontAwesomeIcon icon={faPersonSwimming} /> Costal
           </span>
         )}
@@ -240,79 +259,130 @@ function Footer() {
   );
 }
 
-function AddNewApartment() {
+function AddNewApartment({ hide, onClosePopUp, onAddNewApartment }) {
+  const [propertyName, setPropertyName] = useState("");
+  const [propertImage, setPropertyImage] = useState("im4.jpg");
+  const [propertyPrice, setPropertyPrice] = useState("");
+  const [propertyDescription, setPropertyDescription] = useState("");
+  const [isLuxury, setIsluxury] = useState(true);
+  const [isStandard, setIsStandard] = useState(false);
+  const [isBestSeller, setIsBestSeller] = useState(false);
+  const [isCoastal, setIsCoastal] = useState(false);
+
+  const newApartment = {
+    id: crypto.randomUUID(),
+    title: propertyName,
+    image: propertImage,
+    features: ["feature 1", "feature 2", "feature 3"],
+    description: propertyDescription,
+    star: 0,
+    price: propertyPrice,
+    bestSeller: isBestSeller,
+    royal: isLuxury,
+    costal: isCoastal,
+    standard: isStandard,
+  };
+
   function handleAddApartmentSubmit(e) {
     e.preventDefault();
-    alert("It's Added!");
+    if (
+      !propertyName ||
+      !propertImage ||
+      !propertyPrice ||
+      !propertyDescription
+    )
+      return;
+    console.log(newApartment);
+    onAddNewApartment(newApartment);
+    onClosePopUp();
   }
   return (
-    <form className="add-appart-form" onSubmit={handleAddApartmentSubmit}>
-      <fieldset>
-        <legend>Property Name</legend>
-        <input type="text" />
-      </fieldset>
-
-      <fieldset>
-        <legend>Property Description</legend>
-        <input type="text" />
-      </fieldset>
-
-      <fieldset>
-        <legend>Property Image</legend>
-        <input type="text" />
-      </fieldset>
-
-      <fieldset>
-        <legend>Property Price</legend>
-        <input type="text" />
-      </fieldset>
-
-      <div>
+    <div className={hide ? "add-appart-form show" : "add-appart-form hide"}>
+      <form onSubmit={handleAddApartmentSubmit}>
         <fieldset>
-          <legend>Feature</legend>
-          <ul>
-            <li>
-              <input type="checkbox" />
-              <label>Royal bed</label>
-            </li>
-            <li>
-              <input type="checkbox" />
-              <label>Queen Bed</label>
-            </li>
-            <li>
-              <input type="checkbox" />
-              <label>King Bed</label>
-            </li>
-            <li>
-              <input type="checkbox" />
-              <label>Twin Bed</label>
-            </li>
-            <li>
-              <input type="checkbox" />
-              <label>Double Bed</label>
-            </li>
-            <li>
-              <input type="checkbox" />
-              <label>Free Wifi</label>
-            </li>
-            <li>
-              <input type="checkbox" />
-              <label>Air-conditioner</label>
-            </li>
-            <li>
-              <input type="checkbox" />
-              <label>Swimming pool</label>
-            </li>
-            <li>
-              <input type="checkbox" />
-              <label>Tv</label>
-            </li>
-          </ul>
+          <legend>Property Name</legend>
+          <input
+            type="text"
+            value={propertyName}
+            onChange={(e) => setPropertyName(e.target.value)}
+          />
         </fieldset>
-      </div>
-      <br />
-      <button>Add Apartment</button>
-      <button>x</button>
-    </form>
+
+        <fieldset>
+          <legend>Property Image</legend>
+          <input
+            type="text"
+            value={propertImage}
+            onChange={(e) => setPropertyImage(e.target.value)}
+            disabled
+          />
+        </fieldset>
+
+        <fieldset>
+          <legend>Property Price</legend>
+          <input
+            type="text"
+            value={propertyPrice}
+            onChange={(e) => setPropertyPrice(e.target.value)}
+          />
+        </fieldset>
+
+        <fieldset>
+          <legend>Property Description</legend>
+          <textarea
+            value={propertyDescription}
+            onChange={(e) => setPropertyDescription(e.target.value)}
+          ></textarea>
+        </fieldset>
+        <div>
+          <fieldset>
+            <legend>Feature</legend>
+            <ul>
+              <li>
+                <input
+                  type="checkbox"
+                  value={isLuxury}
+                  checked={isLuxury}
+                  onChange={(e) => setIsluxury(e.target.checked)}
+                />
+                <label>Luxury</label>
+              </li>
+              <li>
+                <input
+                  type="checkbox"
+                  value={isStandard}
+                  checked={isStandard}
+                  onChange={(e) => setIsStandard(e.target.checked)}
+                />
+                <label>Standard</label>
+              </li>
+              <li>
+                <input
+                  type="checkbox"
+                  value={isBestSeller}
+                  checked={isBestSeller}
+                  onChange={(e) => setIsBestSeller(e.target.checked)}
+                />
+                <label>Best Seller</label>
+              </li>
+              <li>
+                <input
+                  type="checkbox"
+                  value={isCoastal}
+                  checked={isCoastal}
+                  onChange={(e) => setIsCoastal(e.target.checked)}
+                />
+                <label>Costal</label>
+              </li>
+            </ul>
+          </fieldset>
+        </div>
+        <br />
+        <button>Add Apartment</button>
+        <span onClick={onClosePopUp}>
+          <FontAwesomeIcon icon={faCircleXmark} />
+        </span>
+      </form>
+    </div>
   );
 }

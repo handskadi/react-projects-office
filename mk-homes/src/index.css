@@ -266,11 +266,11 @@ header button:first-child span {
 }
 
 /* Pop Up Add form*/
+
 .add-appart-form {
-  background-color: rgb(235, 247, 255);
-  width: 400px;
-  margin: 0 auto;
-  padding: 20px;
+  background-color: rgb(124 124 124 / 78%);
+  width: 100%;
+  height: 100%;
 }
 .add-appart-form {
   position: fixed;
@@ -278,6 +278,7 @@ header button:first-child span {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
 .add-appart-form ul {
   list-style-type: none;
 }
@@ -285,6 +286,7 @@ header button:first-child span {
   border: rgba(50, 70, 95, 0.295) groove 1px;
   border-radius: 5px;
 }
+
 .add-appart-form button {
   padding: 10px 20px;
   border: 1px solid rgb(124, 105, 89);
@@ -294,6 +296,42 @@ header button:first-child span {
 }
 .add-appart-form button:hover {
   background-color: rgb(124, 105, 89);
+}
+
+.add-appart-form span {
+  font-size: 1.3rem;
+  position: absolute;
+  top: 4px;
+  right: 4px;
+}
+.add-appart-form span:hover {
+  color: rgb(170, 12, 12);
+}
+.add-appart-form form {
+  width: 400px;
+  background: rgb(101 93 86);
+  color: white;
+  padding: 20px;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+.add-appart-form input[type="text"] {
+  width: 98%;
+  height: 23px;
+  border: none;
+  border-radius: 5px;
+}
+.add-appart-form input,
+textarea,
+input[type="checkbox"] {
+  background: #c9bdb2;
+}
+
+.add-appart-form textarea {
+  width: 98%;
+  height: 43px;
+  border: none;
+  border-radius: 5px;
 }
 
 /* Animation*/
@@ -325,4 +363,18 @@ header button:first-child span {
 }
 .notifation-deactive {
   display: none;
+}
+
+.hide {
+  display: block;
+  opacity: 0;
+  transition: opacity 1s ease;
+  pointer-events: none;
+}
+
+.show {
+  display: block;
+  opacity: 1;
+  transition: opacity 1s ease;
+  pointer-events: auto;
 }
