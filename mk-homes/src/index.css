@@ -287,24 +287,18 @@ header button:first-child span {
   border-radius: 5px;
 }
 
-.add-appart-form button {
-  padding: 10px 20px;
-  border: 1px solid rgb(124, 105, 89);
-  background-color: rgb(135 110 89);
-  border-radius: 5px;
-  color: white;
-}
 .add-appart-form button:hover {
   background-color: rgb(124, 105, 89);
 }
 
-.add-appart-form span {
+.add-appart-form .close-button {
   font-size: 1.3rem;
   position: absolute;
   top: 4px;
   right: 4px;
+  cursor: pointer;
 }
-.add-appart-form span:hover {
+.add-appart-form .close-button:hover {
   color: rgb(170, 12, 12);
 }
 .add-appart-form form {
@@ -377,4 +371,71 @@ header button:first-child span {
   opacity: 1;
   transition: opacity 1s ease;
   pointer-events: auto;
+}
+
+/* Testing */
+
+.next-prev {
+  background-color: rgb(135 110 89);
+  background-color: rgb(135 110 89);
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin-left: 5px;
+  float: right;
+  cursor: pointer;
+}
+.next-prev-inactive {
+  padding: 10px 20px;
+  margin-left: 5px;
+  float: right;
+  cursor: pointer;
+  border: 1px solid rgb(124, 105, 89);
+  background-color: rgb(107 94 83);
+  border-radius: 5px;
+  color: #8a7070;
+  cursor: default;
+}
+.next-prev:hover {
+  background-color: rgb(124, 105, 89);
+}
+
+.numbers {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 10px;
+}
+
+.numbers > div {
+  height: 40px;
+  aspect-ratio: 1;
+  background-color: #e7e7e7;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: rgb(63, 53, 45);
+}
+
+.numbers .active {
+  background-color: rgb(63, 53, 45);
+  color: #fff;
+}
+
+.inactive-button {
+  padding: 10px 20px;
+  border: 1px solid rgb(124, 105, 89);
+  background-color: rgb(107 94 83);
+  border-radius: 5px;
+  color: #8a7070;
+  cursor: auto;
+}
+
+.active-button {
+  padding: 10px 20px;
+  border: 1px solid rgb(124, 105, 89);
+  background-color: rgb(135 110 89);
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
 }

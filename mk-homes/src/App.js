@@ -268,6 +268,15 @@ function AddNewApartment({ hide, onClosePopUp, onAddNewApartment }) {
   const [isStandard, setIsStandard] = useState(false);
   const [isBestSeller, setIsBestSeller] = useState(false);
   const [isCoastal, setIsCoastal] = useState(false);
+  const [step, setStep] = useState(1);
+
+  function nextHandler() {
+    if (step < 3) setStep((s) => s + 1);
+  }
+
+  function previousHandler() {
+    if (step > 1) setStep((s) => s - 1);
+  }
 
   const newApartment = {
     id: crypto.randomUUID(),
@@ -295,10 +304,23 @@ function AddNewApartment({ hide, onClosePopUp, onAddNewApartment }) {
     console.log(newApartment);
     onAddNewApartment(newApartment);
     onClosePopUp();
+    setPropertyName("");
+    setPropertyImage("im4.jpg");
+    setPropertyPrice("");
+    setPropertyDescription("");
+    setIsluxury(true);
+    setIsStandard(false);
+    setIsBestSeller(false);
+    setIsCoastal(false);
   }
   return (
     <div className={hide ? "add-appart-form show" : "add-appart-form hide"}>
       <form onSubmit={handleAddApartmentSubmit}>
+        <div className="numbers">
+          <div className={step >= 1 ? "active" : ""}>1</div>
+          <div className={step >= 2 ? "active" : ""}>2</div>
+          <div className={step >= 3 ? "active" : ""}>3</div>
+        </div>
         <fieldset>
           <legend>Property Name</legend>
           <input
@@ -378,9 +400,24 @@ function AddNewApartment({ hide, onClosePopUp, onAddNewApartment }) {
           </fieldset>
         </div>
         <br />
-        <button>Add Apartment</button>
-        <span onClick={onClosePopUp}>
+        <button className={step === 3 ? "active-button" : "inactive-button"}>
+          Add Apartment
+        </button>
+
+        <span onClick={onClosePopUp} className="close-button">
           <FontAwesomeIcon icon={faCircleXmark} />
+        </span>
+        <span
+          className={step === 3 ? "next-prev-inactive" : "next-prev"}
+          onClick={nextHandler}
+        >
+          Next
+        </span>
+        <span
+          className={step === 1 ? "next-prev-inactive" : "next-prev"}
+          onClick={previousHandler}
+        >
+          Previous
         </span>
       </form>
     </div>
