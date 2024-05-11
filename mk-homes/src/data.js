@@ -31,7 +31,7 @@ export const data = [
     image: "im3.jpg",
     features: ["Roal Bed", "Air-conditioner", "swimming pool"],
     description:
-      "Safi neque asperiores quisquam illum distinctio doloremque quae dolorum, possimus totam!",
+      "Safi neque asperiores quisquam illum distinctio moskot doloremque quae dolorum, possimus totam!",
     star: 3,
     price: 82,
     bestSeller: true,

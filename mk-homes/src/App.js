@@ -11,6 +11,7 @@ import {
   faStar,
   faStarHalfStroke,
   faCircleXmark,
+  faSignOut,
 } from "@fortawesome/free-solid-svg-icons";
 
 import {
@@ -70,7 +71,9 @@ function Header({ onClosePopUp }) {
         <button onClick={onClosePopUp}>
           Add <FontAwesomeIcon icon={faPlus} />
         </button>
-        <button onClick={() => setActive(!active)}>Logout</button>
+        <button onClick={() => setActive(!active)}>
+          <FontAwesomeIcon icon={faSignOut} />
+        </button>
       </div>
     </header>
   );
@@ -261,7 +264,7 @@ function Footer() {
 
 function AddNewApartment({ hide, onClosePopUp, onAddNewApartment }) {
   const [propertyName, setPropertyName] = useState("");
-  const [propertImage, setPropertyImage] = useState("im4.jpg");
+  const [propertImage, setPropertyImage] = useState(null); //"im4.jpg"
   const [propertyPrice, setPropertyPrice] = useState("");
   const [propertyDescription, setPropertyDescription] = useState("");
   const [isLuxury, setIsluxury] = useState(true);
@@ -269,6 +272,17 @@ function AddNewApartment({ hide, onClosePopUp, onAddNewApartment }) {
   const [isBestSeller, setIsBestSeller] = useState(false);
   const [isCoastal, setIsCoastal] = useState(false);
   const [step, setStep] = useState(1);
+
+  const [kingBed, setKingBed] = useState(false);
+  const [twinBed, setTwinBed] = useState(false);
+  const [royalBed, setRoyalBed] = useState(false);
+  const [queenBed, setQueenBed] = useState(false);
+  const [airConditioner, setAirConditioner] = useState(false);
+  const [swimingPool, setSwimingPool] = useState(false);
+  const [freeWifi, setFreeWifi] = useState(false);
+  const [balcony, setBalcony] = useState(false);
+  const [parking, setParking] = useState(false);
+  const [tv, setTV] = useState(false);
 
   function nextHandler() {
     if (step < 3) setStep((s) => s + 1);
@@ -278,11 +292,36 @@ function AddNewApartment({ hide, onClosePopUp, onAddNewApartment }) {
     if (step > 1) setStep((s) => s - 1);
   }
 
+  const selectedAmeties = {
+    kingBed,
+    twinBed,
+    royalBed,
+    queenBed,
+    airConditioner,
+    swimingPool,
+    freeWifi,
+    balcony,
+    tv,
+  };
+  const amenitiesText = {
+    kingBed: "King Bed",
+    twinBed: "Twin Bed",
+    royalBed: "Royal Bed",
+    queenBed: "Queen Bed",
+    airConditioner: "Air Conditioner",
+    swimingPool: "Swimming Pool",
+    freeWifi: "Free Wifi",
+    balcony: "Balcony",
+    tv: "Tv",
+  };
+
   const newApartment = {
     id: crypto.randomUUID(),
     title: propertyName,
     image: propertImage,
-    features: ["feature 1", "feature 2", "feature 3"],
+    features: Object.entries(selectedAmeties)
+      .filter(([key, value]) => value)
+      .map(([key]) => amenitiesText[key]),
     description: propertyDescription,
     star: 0,
     price: propertyPrice,
@@ -312,7 +351,9 @@ function AddNewApartment({ hide, onClosePopUp, onAddNewApartment }) {
     setIsStandard(false);
     setIsBestSeller(false);
     setIsCoastal(false);
+    setStep(1);
   }
+
   return (
     <div className={hide ? "add-appart-form show" : "add-appart-form hide"}>
       <form onSubmit={handleAddApartmentSubmit}>
@@ -321,86 +362,239 @@ function AddNewApartment({ hide, onClosePopUp, onAddNewApartment }) {
           <div className={step >= 2 ? "active" : ""}>2</div>
           <div className={step >= 3 ? "active" : ""}>3</div>
         </div>
-        <fieldset>
-          <legend>Property Name</legend>
-          <input
-            type="text"
-            value={propertyName}
-            onChange={(e) => setPropertyName(e.target.value)}
-          />
-        </fieldset>
 
-        <fieldset>
-          <legend>Property Image</legend>
-          <input
-            type="text"
-            value={propertImage}
-            onChange={(e) => setPropertyImage(e.target.value)}
-            disabled
-          />
-        </fieldset>
+        {step === 1 ? (
+          <>
+            <div className="errors">
+              <ul>
+                {!propertyName && <li>Property Name can not be empty!</li>}
+                {!propertyDescription && (
+                  <li>Property Description can not be empty!</li>
+                )}
+                {isLuxury || isStandard || isBestSeller || isCoastal ? (
+                  ""
+                ) : (
+                  <li>At least one feature should be checked!</li>
+                )}
+              </ul>
+            </div>
+            <fieldset>
+              <legend>Property Name</legend>
+              <input
+                type="text"
+                value={propertyName}
+                onChange={(e) => setPropertyName(e.target.value)}
+              />
+            </fieldset>
 
-        <fieldset>
-          <legend>Property Price</legend>
-          <input
-            type="text"
-            value={propertyPrice}
-            onChange={(e) => setPropertyPrice(e.target.value)}
-          />
-        </fieldset>
+            <fieldset>
+              <legend>Property Description</legend>
+              <textarea
+                value={propertyDescription}
+                onChange={(e) => setPropertyDescription(e.target.value)}
+              ></textarea>
+            </fieldset>
+            <div>
+              <fieldset>
+                <legend>Feature</legend>
+                <ul>
+                  <li>
+                    <input
+                      type="checkbox"
+                      value={isLuxury}
+                      checked={isLuxury}
+                      onChange={(e) => setIsluxury(e.target.checked)}
+                    />
+                    <label>Luxury</label>
+                  </li>
+                  <li>
+                    <input
+                      type="checkbox"
+                      value={isStandard}
+                      checked={isStandard}
+                      onChange={(e) => setIsStandard(e.target.checked)}
+                    />
+                    <label>Standard</label>
+                  </li>
+                  <li>
+                    <input
+                      type="checkbox"
+                      value={isBestSeller}
+                      checked={isBestSeller}
+                      onChange={(e) => setIsBestSeller(e.target.checked)}
+                    />
+                    <label>Best Seller</label>
+                  </li>
+                  <li>
+                    <input
+                      type="checkbox"
+                      value={isCoastal}
+                      checked={isCoastal}
+                      onChange={(e) => setIsCoastal(e.target.checked)}
+                    />
+                    <label>Costal</label>
+                  </li>
+                </ul>
+              </fieldset>
+            </div>
+          </>
+        ) : step === 2 ? (
+          <>
+            <div className="errors">
+              <ul>
+                {!isLuxury && <li>At least one Amenty should be checked!</li>}
+              </ul>
+            </div>
+            <fieldset>
+              <legend>Amenties</legend>
+              <ul>
+                <li>
+                  <input
+                    type="checkbox"
+                    value={kingBed}
+                    checked={kingBed}
+                    onChange={(e) => setKingBed(e.target.checked)}
+                  />
+                  <label>King Beds</label>
+                </li>
+                <li>
+                  <input
+                    type="checkbox"
+                    value={twinBed}
+                    checked={twinBed}
+                    onChange={(e) => setTwinBed(e.target.checked)}
+                  />
+                  <label>Twin Beds</label>
+                </li>
+                <li>
+                  <input
+                    type="checkbox"
+                    value={royalBed}
+                    checked={royalBed}
+                    onChange={(e) => setRoyalBed(e.target.checked)}
+                  />
+                  <label>Royal Bed</label>
+                </li>
+                <li>
+                  <input
+                    type="checkbox"
+                    value={queenBed}
+                    checked={queenBed}
+                    onChange={(e) => setQueenBed(e.target.checked)}
+                  />
+                  <label>Queen Bed</label>
+                </li>
+                <li>
+                  <input
+                    type="checkbox"
+                    value={airConditioner}
+                    checked={airConditioner}
+                    onChange={(e) => setAirConditioner(e.target.checked)}
+                  />
+                  <label>Air-conditioner</label>
+                </li>
+                <li>
+                  <input
+                    type="checkbox"
+                    value={swimingPool}
+                    checked={swimingPool}
+                    onChange={(e) => setSwimingPool(e.target.checked)}
+                  />
+                  <label>Swimming pool</label>
+                </li>
+                <li>
+                  <input
+                    type="checkbox"
+                    value={freeWifi}
+                    checked={freeWifi}
+                    onChange={(e) => setFreeWifi(e.target.checked)}
+                  />
+                  <label>Free Wifi</label>
+                </li>
+                <li>
+                  <input
+                    type="checkbox"
+                    value={balcony}
+                    checked={balcony}
+                    onChange={(e) => setBalcony(e.target.checked)}
+                  />
+                  <label> Balcony</label>
+                </li>
+                <li>
+                  <input
+                    type="checkbox"
+                    value={parking}
+                    checked={parking}
+                    onChange={(e) => setParking(e.target.checked)}
+                  />
+                  <label>Parking</label>
+                </li>
+                <li>
+                  <input
+                    type="checkbox"
+                    value={tv}
+                    checked={tv}
+                    onChange={(e) => setTV(e.target.checked)}
+                  />
+                  <label>Tv</label>
+                </li>
+              </ul>
+            </fieldset>
+          </>
+        ) : (
+          <>
+            <div className="errors">
+              <ul>
+                {!propertImage && <li>Image can not be empty!</li>}
+                {!propertyPrice && <li>Price can not be empty!</li>}
+              </ul>
+            </div>
+            <fieldset>
+              <legend>Property Image</legend>
+              {/* <input
+                type="text"
+                value={propertImage}
+                onChange={(e) => setPropertyImage(e.target.value)}
+                disabled
+              /> */}
+              <input
+                type="file"
+                accept="image/*"
+                className="image-upload"
+                onChange={(e) => setPropertyImage(e.target.files[0])}
+              />
 
-        <fieldset>
-          <legend>Property Description</legend>
-          <textarea
-            value={propertyDescription}
-            onChange={(e) => setPropertyDescription(e.target.value)}
-          ></textarea>
-        </fieldset>
-        <div>
-          <fieldset>
-            <legend>Feature</legend>
-            <ul>
-              <li>
-                <input
-                  type="checkbox"
-                  value={isLuxury}
-                  checked={isLuxury}
-                  onChange={(e) => setIsluxury(e.target.checked)}
+              {propertImage && (
+                <img
+                  src={URL.createObjectURL(propertImage)}
+                  alt="Preview"
+                  style={{ maxWidth: "100%" }}
                 />
-                <label>Luxury</label>
-              </li>
-              <li>
-                <input
-                  type="checkbox"
-                  value={isStandard}
-                  checked={isStandard}
-                  onChange={(e) => setIsStandard(e.target.checked)}
-                />
-                <label>Standard</label>
-              </li>
-              <li>
-                <input
-                  type="checkbox"
-                  value={isBestSeller}
-                  checked={isBestSeller}
-                  onChange={(e) => setIsBestSeller(e.target.checked)}
-                />
-                <label>Best Seller</label>
-              </li>
-              <li>
-                <input
-                  type="checkbox"
-                  value={isCoastal}
-                  checked={isCoastal}
-                  onChange={(e) => setIsCoastal(e.target.checked)}
-                />
-                <label>Costal</label>
-              </li>
-            </ul>
-          </fieldset>
-        </div>
+              )}
+            </fieldset>
+
+            <fieldset>
+              <legend>Property Price</legend>
+              <input
+                type="text"
+                value={propertyPrice}
+                onChange={(e) => setPropertyPrice(e.target.value)}
+              />
+            </fieldset>
+          </>
+        )}
         <br />
-        <button className={step === 3 ? "active-button" : "inactive-button"}>
+        <button
+          className={
+            step === 3 &&
+            propertyName &&
+            propertyDescription &&
+            propertyPrice &&
+            (isLuxury || isStandard || isBestSeller || isCoastal)
+              ? "active-button"
+              : "inactive-button"
+          }
+        >
           Add Apartment
         </button>
 

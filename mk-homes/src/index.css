@@ -439,3 +439,16 @@ header button:first-child span {
   color: white;
   cursor: pointer;
 }
+
+.image-upload {
+  padding: 20px;
+  width: 325px;
+  text-align: center;
+}
+.image-upload {
+  padding: 20px;
+}
+
+.errors {
+  color: rgb(202, 184, 184);
+}
